@@ -34,5 +34,13 @@ class BlenderObjects(BlenderData):
         }
 
 
+def blender_data_to_dict() -> dict[str, Any]:
+    objects: BlenderObjects = BlenderObjects(bpy.data.objects)
+    return {
+        "objects": objects.entries
+    }
+
+
 if __name__ == "__main__":
-    pass
+    data: dict[str, Any] = blender_data_to_dict()
+    print(data)
