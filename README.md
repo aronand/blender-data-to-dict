@@ -9,3 +9,7 @@ Each listed key will hold a dictionary where a corresponding data type's content
 - meshes
 - materials
 - images
+
+## How to use
+
+Currently the only way to use the script is either by passing it to Blender through command line, or by using the script through Blender's script editor.
