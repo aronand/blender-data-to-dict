@@ -31,6 +31,8 @@ class BlenderObjects(BlenderData):
         return {
             "type": obj.type,
             "data": obj.data.name,  # Can be used to point to the right data depending on object type
+            "modifiers": [],
+            "materials": []
         }
 
 

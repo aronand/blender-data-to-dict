@@ -22,7 +22,7 @@ class TestBlenderObjects(TestCase):
         mock_object("Cube", "MESH", "Cube"),
         mock_object("Cube.001", "MESH", "Cube.001")
     ]
-    mock_entry: dict[str, Any] = {"type": "MESH", "data": "Cube"}
+    mock_entry: dict[str, Any] = {"type": "MESH", "data": "Cube", "modifiers": [], "materials": []}
 
     @property
     def mock_entries_output(self) -> dict[str, Any]:
