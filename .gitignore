@@ -134,3 +134,4 @@ dmypy.json
 # Project related
 notes.txt
 *.blend*
+src/testing.py
