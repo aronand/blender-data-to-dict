@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from main import BlenderObjects
 
-from mock_classes import MockModifier, MockObject
+from tests.mock_classes import MockModifier, MockObject
 
 
 class TestBlenderObjects(TestCase):
