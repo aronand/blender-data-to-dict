@@ -31,9 +31,17 @@ class BlenderObjects(BlenderData):
         return {
             "type": obj.type,
             "data": obj.data.name,  # Can be used to point to the right data depending on object type
-            "modifiers": [],
+            "modifiers": self.get_object_modifiers(obj),
             "materials": []
         }
+
+    def get_object_modifiers(self, obj: bpy.types.Object) -> list[dict[str, Any]]:
+        modifiers: list[dict[str, Any]] = []
+        for modifier in obj.modifiers:
+            modifiers.append({
+                "type": modifier.type
+            })
+        return modifiers
 
 
 def blender_data_to_dict() -> dict[str, Any]:

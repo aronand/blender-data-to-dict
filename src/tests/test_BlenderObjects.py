@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from main import BlenderObjects
 
-from .mock_classes import MockObject
+from mock_classes import MockModifier, MockObject
 
 
 class TestBlenderObjects(TestCase):
@@ -12,7 +12,7 @@ class TestBlenderObjects(TestCase):
         MockObject("Cube", "MESH", "Cube"),
         MockObject("Cube.001", "MESH", "Cube.001")
     ]
-    mock_entry: dict[str, Any] = {"type": "MESH", "data": "Cube", "modifiers": [], "materials": []}
+    mock_entry: dict[str, Any] = {"type": "MESH", "data": "Cube", "modifiers": [{"type": "SUBSURF"}], "materials": []}
 
     @property
     def mock_entries_output(self) -> dict[str, Any]:
@@ -31,5 +31,7 @@ class TestBlenderObjects(TestCase):
     def test_create_object_entry(self):
         # NOTE: If this fails, mock_entries_output will most likely cause a failure in test_entries as well!
         with self.subTest("Returned dict matches mock_entry"):
-            entry: dict[str, Any] = self.blender_objects.create_object_entry(MockObject("", "MESH", "Cube"))
+            mock_object: MockObject = MockObject("", "MESH", "Cube")
+            mock_object.modifiers.append(MockModifier("SUBSURF"))
+            entry: dict[str, Any] = self.blender_objects.create_object_entry(mock_object)
             self.assertEqual(self.mock_entry, entry)
