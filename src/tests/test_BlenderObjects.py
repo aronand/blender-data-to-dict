@@ -1,26 +1,16 @@
-from typing import Any, Callable
+from typing import Any
 from unittest import TestCase
 
 from main import BlenderObjects
 
-
-class MockBlenderObject:
-    class MockDataObject:
-        def __init__(self, name: str):
-            self.name = name
-
-    def __init__(self, name: str, obj_type: str, data_name: str):
-        self.name = name
-        self.type = obj_type
-        self.data = MockBlenderObject.MockDataObject(data_name)
+from .mock_classes import MockObject
 
 
 class TestBlenderObjects(TestCase):
     blender_objects: BlenderObjects
-    mock_object: Callable = MockBlenderObject
-    mock_objects: list[MockBlenderObject] = [
-        mock_object("Cube", "MESH", "Cube"),
-        mock_object("Cube.001", "MESH", "Cube.001")
+    mock_objects: list[MockObject] = [
+        MockObject("Cube", "MESH", "Cube"),
+        MockObject("Cube.001", "MESH", "Cube.001")
     ]
     mock_entry: dict[str, Any] = {"type": "MESH", "data": "Cube", "modifiers": [], "materials": []}
 
@@ -41,5 +31,5 @@ class TestBlenderObjects(TestCase):
     def test_create_object_entry(self):
         # NOTE: If this fails, mock_entries_output will most likely cause a failure in test_entries as well!
         with self.subTest("Returned dict matches mock_entry"):
-            entry: dict[str, Any] = self.blender_objects.create_object_entry(self.mock_object("", "MESH", "Cube"))
+            entry: dict[str, Any] = self.blender_objects.create_object_entry(MockObject("", "MESH", "Cube"))
             self.assertEqual(self.mock_entry, entry)
