@@ -4,6 +4,7 @@ from typing import Any, Iterable
 
 
 class BlenderData:
+    """Base class for all Blender data container classes."""
     __slots__ = ["__entries"]
 
     def __init__(self):
@@ -18,6 +19,7 @@ class BlenderData:
 
 
 class BlenderObjects(BlenderData):
+    """Holds information about each object found in bpy.data.objects."""
     def __init__(self, objects: Iterable):
         super().__init__()
         self.__add_object_entries(objects)
