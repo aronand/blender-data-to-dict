@@ -9,10 +9,10 @@ class MockMesh:
 
 
 class MockObject:
-    def __init__(self, name: str, obj_type: str, data_name: str):
+    def __init__(self, name: str, obj_type: str):
         self.name = name
         self.type = obj_type
-        self.data = MockMesh(data_name)
+        self.data: MockMesh | None = None
         self.modifiers = []
         self.material_slots = []
 
