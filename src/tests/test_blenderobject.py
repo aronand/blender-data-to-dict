@@ -79,9 +79,10 @@ class TestBlenderObjectGenerator(TestCase):
         for name in self.names:
             blender_object: BlenderObject = BlenderObject()
             blender_object.name = name
+            blender_object.type = "EMPTY"
             self.objects.append(blender_object)
 
     def test_generator(self):
         with self.subTest("Names match"):
-            names: list[str] = [obj.name for obj in self.objects]
+            names: list[str] = [obj.name for obj in blender_object_generator(self.objects)]
             self.assertEqual(names, self.names)
