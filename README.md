@@ -14,7 +14,16 @@ Each listed key will hold a dictionary where a corresponding data type's content
 
 ## How to use
 
-Currently the only way to use the script is either by passing it to Blender through command line, or by using the script through Blender's script editor.
+The tool does not work with Blender out of the box due to being broken into modules.
+
+To run the script, pass the following arguments to Blender in command line or in shortcut:
+
+`-b {blend_file} -P {script_path} -- {script_root}`
+
+Everything after `--` will be  omitted by Blender and used by the script. Currently the JSON is written into the script
+root.
+
+> You can also pass `--factory-startup` to Blender to omit loading of startup scripts.
 
 ## Why
 
