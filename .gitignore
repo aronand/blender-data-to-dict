@@ -135,3 +135,5 @@ dmypy.json
 notes.txt
 *.blend*
 src/testing.py
+run.bat
+output.json
