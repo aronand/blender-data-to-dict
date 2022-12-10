@@ -14,3 +14,9 @@ class MockObject:
         self.type = obj_type
         self.data = MockMesh(data_name)
         self.modifiers = []
+        self.material_slots = []
+
+
+class MockMaterialSlot:
+    def __init__(self, name: str):
+        self.name = name

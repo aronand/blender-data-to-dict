@@ -32,7 +32,7 @@ class BlenderObjects(BlenderData):
             "type": obj.type,
             "data": obj.data.name,  # Can be used to point to the right data depending on object type
             "modifiers": self.get_object_modifiers(obj),
-            "materials": []
+            "materials": [material_slot.name for material_slot in obj.material_slots]
         }
 
     def get_object_modifiers(self, obj: bpy.types.Object) -> list[dict[str, Any]]:
