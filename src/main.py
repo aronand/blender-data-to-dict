@@ -32,7 +32,7 @@ class BlenderObjects(BlenderData):
     def create_object_entry(self, obj: bpy.types.Object) -> dict[str, Any]:
         return {
             "type": obj.type,
-            "data": obj.data.name,  # Can be used to point to the right data depending on object type
+            "data": 0 if obj.data is None else obj.data.name,  # Used to point to the right data based on object type
             "modifiers": self.get_object_modifiers(obj),
             "materials": [material_slot.name for material_slot in obj.material_slots]
         }
