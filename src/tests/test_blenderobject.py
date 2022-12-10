@@ -1,7 +1,7 @@
 from typing import Any
 from unittest import TestCase
 
-from blenderobject import BlenderObject
+from blenderobject import BlenderObject, blender_object_generator
 from blenderobjectprotocol import BlenderObjectProtocol
 
 
@@ -68,3 +68,20 @@ class TestBlenderObject(TestCase):
         bl_obj.name = name
         bl_obj.type = self.mock_dict[name]["type"]
         self.assertEqual(self.mock_dict, bl_obj.dict)
+
+
+class TestBlenderObjectGenerator(TestCase):
+    objects: list[BlenderObject]
+    names: list[str] = [f"Test{i}" for i in range(9)]
+
+    def setUp(self) -> None:
+        self.objects = []
+        for name in self.names:
+            blender_object: BlenderObject = BlenderObject()
+            blender_object.name = name
+            self.objects.append(blender_object)
+
+    def test_generator(self):
+        with self.subTest("Names match"):
+            names: list[str] = [obj.name for obj in self.objects]
+            self.assertEqual(names, self.names)

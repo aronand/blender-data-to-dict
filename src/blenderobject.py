@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Iterable
 
 import utils
 from blenderdata import BlenderData
@@ -58,3 +58,10 @@ class BlenderObject(BlenderData):
     def init_from_object(self, obj: BlenderObjectProtocol):
         self.name = obj.name
         self.type = obj.type
+
+
+def blender_object_generator(objects: Iterable) -> BlenderObject:
+    for obj in objects:
+        blender_object: BlenderObject = BlenderObject()
+        blender_object.init_from_object(obj)
+        yield blender_object
