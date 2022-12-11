@@ -1,6 +1,6 @@
 from typing import Any
 
-from unittest import TestCase
+from unittest import mock, TestCase
 
 from blenderdata import BlenderDataDict, BlenderMesh, BlenderObject
 
@@ -34,6 +34,14 @@ class TestBlenderDataDict(TestCase):
             self.assertEqual(self.object_dict, BlenderDataDict.get_dict(self.blender_object))
         with self.subTest("BlenderMesh returns a correct dict"):
             self.assertEqual(self.mesh_dict, BlenderDataDict.get_dict(self.mesh))
+        with self.subTest("bpy.types.Object returns a correct dict"):
+            with mock.patch("blenderdata.utils.get_class_name") as mock_class:
+                mock_class.return_value = "bpy.types.Object"
+                self.assertEqual(self.object_dict, BlenderDataDict.get_dict(self.blender_object))
+        with self.subTest("bpy.types.Mesh returns a correct dict"):
+            with mock.patch("blenderdata.utils.get_class_name") as mock_class:
+                mock_class.return_value = "bpy.types.Mesh"
+                self.assertEqual(self.mesh_dict, BlenderDataDict.get_dict(self.mesh))
 
     def test_get_object_dict(self):
         bl_obj: BlenderObject = BlenderObject()
