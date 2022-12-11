@@ -21,8 +21,16 @@ class BlenderDataDict:
 
     @classmethod
     def get_object_dict(cls, obj: BlenderObjectProtocol) -> dict[str, Any]:
-        pass
+        data: str | None = (None if obj.data is None else obj.data.name)
+        return {
+            obj.name: {
+                "type": obj.type,
+                "data": data,
+                "modifiers": [mod.type for mod in obj.modifiers],
+                "material_slots": [mat.name for mat in obj.material_slots]
+            }
+        }
 
     @classmethod
     def get_mesh_dict(cls, mesh: BlenderMeshProtocol) -> dict[str, Any]:
-        pass
+        return {mesh.name: {}}
