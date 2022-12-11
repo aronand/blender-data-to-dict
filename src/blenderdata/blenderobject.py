@@ -7,22 +7,14 @@ from .blenderobjectprotocol import BlenderObjectProtocol
 
 class BlenderObject(BlenderDataBaseClass):
     """Imitates bpy.types.Object. Compliant with BlenderObjectProtocol."""
-    __slots__ = "__name", "__type", "__data", "__modifiers", "__material_slots"
+    __slots__ = "__type", "__data", "__modifiers", "__material_slots"
 
     def __init__(self):
-        self.__name: str = ""  # name should never be "", treat as error
+        super().__init__()
         self.__type: str = ""  # type should never be "", treat as error
         self.__data: str | int = 0  # if int, treat as None, or error if type != "EMPTY"
         self.__modifiers: list = []  # TODO: Modifier class and protocol
         self.__material_slots: list = []  # TODO: MaterialSlot class and protocol
-
-    @property
-    def name(self) -> str:
-        return self.__name
-
-    @name.setter
-    def name(self, name: str):
-        self.__name = utils.validate_string(name)
 
     @property
     def type(self) -> str:

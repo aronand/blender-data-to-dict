@@ -33,18 +33,6 @@ class TestBlenderObject(TestCase):
             self.assertEqual("test", self.blender_object.name)
             self.assertEqual("MESH", self.blender_object.type)
 
-    def test_name_property(self):
-        with self.subTest("Setter: Type must be str (raises TypeError)"):
-            with self.assertRaises(TypeError):
-                self.blender_object.name = 42
-        with self.subTest("Setter: Value can't be an empty string (raises ValueError)"):
-            with self.assertRaises(ValueError):
-                self.blender_object.name = ""
-        with self.subTest("Setter/Getter: When given a valid value, value can be set and retrieved"):
-            name: str = "test"
-            self.blender_object.name = name
-            self.assertEqual(name, self.blender_object.name)
-
     def test_type_property(self):
         with self.subTest("Setter: Type must be str (raises TypeError)"):
             with self.assertRaises(TypeError):
