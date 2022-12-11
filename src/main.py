@@ -11,6 +11,7 @@ class Main:
     def __init__(self):
         self.__root: str | None = None  # Use the property and the setter instead of directly accessing
         self.objects: dict[str, Any] = {}
+        self.meshes: dict[str, Any] = {}
 
     @property
     def root(self) -> str:
@@ -31,16 +32,21 @@ class Main:
 
     def run(self):
         self.__get_root_path()
-        from blenderdata import blender_object_generator
+        from blenderdata import BlenderDataFactory, BlenderObject
 
-        for obj in blender_object_generator(bpy.data.objects):
-            obj_dict: dict[str, Any] = obj.dict
-            obj_name: str = list(obj_dict.keys())[0]
-            logging.debug(f"Adding object '{obj_name}'")
-            self.objects |= obj_dict
+        for obj in bpy.data.objects:
+            logging.debug(f"Adding object '{obj.name}'")
+            bd_obj: BlenderObject = BlenderDataFactory.get_blender_object(obj)
+            self.objects |= bd_obj.dict
+            if obj.type != "MESH":
+                continue
+            self.meshes |= bd_obj.data.dict
 
         json_path: str = os.path.join(self.root, "output.json")
-        json_contents: dict[str, dict] = {"objects": self.objects}
+        json_contents: dict[str, dict] = {
+            "objects": self.objects,
+            "meshes": self.meshes
+        }
         logging.debug(f"Writing contents to {json_path}")
         with open(json_path, "w") as output:
             json.dump(json_contents, output, indent=2)

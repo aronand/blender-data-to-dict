@@ -1,8 +1,7 @@
-from typing import Any, Generator, Iterable
+from typing import Any
 
 from . import utils
 from .blenderdatabaseclass import BlenderDataBaseClass
-from .blenderobjectprotocol import BlenderObjectProtocol
 from .blendermeshprotocol import BlenderMeshProtocol
 
 
@@ -43,7 +42,7 @@ class BlenderObject(BlenderDataBaseClass):
 
     @property
     def dict(self) -> dict[str, Any]:
-        data: str | None = (None if self.type == "EMPTY" else self.data.name)
+        data: str | None = (None if self.data is None else self.data.name)
         return {
             self.name: {
                 "type": self.type,
@@ -52,15 +51,3 @@ class BlenderObject(BlenderDataBaseClass):
                 "material_slots": self.material_slots
             }
         }
-
-    def init_from_object(self, obj: BlenderObjectProtocol):
-        self.name = obj.name
-        self.type = obj.type
-        self.data = obj.data
-
-
-def blender_object_generator(objects: Iterable) -> Generator[BlenderObject, None, None]:
-    for obj in objects:
-        blender_object: BlenderObject = BlenderObject()
-        blender_object.init_from_object(obj)
-        yield blender_object
