@@ -3,6 +3,10 @@ Output a number of different information about the contents of a Blender 3D file
 
 **Note that as of now there are no plans to dump any of the 3D data.**
 
+## Disclaimer
+
+This tool is somewhat pointless, as you can [build bpy](https://docs.blender.org/api/current/info_advanced_blender_as_bpy.html) and access the contents of a file that way. This is more of a "just because" type of project, and though not tested, should theoretically also work if using bpy out of Blender.
+
 ## Planned output contents
 
 Each listed key will hold a dictionary where a corresponding data type's contents can be found using its name. In other words, using `json["objects"]["Cube"]` will give access to data equivalent to using `bpy.data.objects["Cube"]`.
