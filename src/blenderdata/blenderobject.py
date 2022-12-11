@@ -1,11 +1,11 @@
 from typing import Any, Iterable
 
 from . import utils
-from .blenderdata import BlenderData
+from .blenderdatabaseclass import BlenderDataBaseClass
 from .blenderobjectprotocol import BlenderObjectProtocol
 
 
-class BlenderObject(BlenderData):
+class BlenderObject(BlenderDataBaseClass):
     """Imitates bpy.types.Object. Compliant with BlenderObjectProtocol."""
     __slots__ = "__name", "__type", "__data", "__modifiers", "__material_slots"
 

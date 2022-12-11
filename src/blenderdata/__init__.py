@@ -1,3 +1,3 @@
-from .blenderdata import BlenderData
+from .blenderdatabaseclass import BlenderDataBaseClass
 from .blenderobject import BlenderObject, blender_object_generator
 from .blenderobjectprotocol import BlenderObjectProtocol
