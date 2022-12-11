@@ -4,4 +4,5 @@ from blenderdata import BlenderDataDict
 
 
 class TestBlenderDataDict(TestCase):
-    pass
+    def test_get_dict(self):
+        self.assertEqual({}, BlenderDataDict.get_dict(None))

@@ -1,2 +1,7 @@
+from typing import Any
+
+
 class BlenderDataDict:
-    pass
+    @classmethod
+    def get_dict(cls, obj: Any) -> dict:
+        return {}
