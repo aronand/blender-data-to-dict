@@ -1,37 +1,43 @@
 from typing import Any
 from unittest import TestCase
 
-from blenderdata import BlenderObject, blender_object_generator, BlenderObjectProtocol
+from blenderdata import BlenderMesh, BlenderObject, blender_object_generator, BlenderObjectProtocol
 
 
 class TestBlenderObject(TestCase):
     blender_object: BlenderObject
-    mock_dict: dict[str, Any] = {
-        "test": {
-            "type": "MESH",
-            "data": 0,
-            "modifiers": [],
-            "material_slots": []
-        }
-    }
+    mesh: BlenderMesh
+    mock_dict: dict[str, Any]
 
     def setUp(self) -> None:
         self.blender_object = BlenderObject()
+        self.mesh = BlenderMesh()
+        self.mesh.name = "test"
+        self.mock_dict: dict[str, Any] = {
+            "test": {
+                "type": "EMPTY",
+                "data": None,
+                "modifiers": [],
+                "material_slots": []
+            }
+        }
 
     def test_initialization(self):
         with self.subTest("Initialized object is empty"):
             self.assertEqual("", self.blender_object.name)
             self.assertEqual("", self.blender_object.type)
-            self.assertEqual(0, self.blender_object.data)
+            self.assertEqual(None, self.blender_object.data)
             self.assertEqual([], self.blender_object.modifiers)
             self.assertEqual([], self.blender_object.material_slots)
         with self.subTest("Object can be initialized by another object compliant with BlenderObjectProtocol"):
             bl_obj: BlenderObject = BlenderObject()
             bl_obj.name = "test"
             bl_obj.type = "MESH"
+            bl_obj.data = self.mesh
             self.blender_object.init_from_object(bl_obj)
             self.assertEqual("test", self.blender_object.name)
             self.assertEqual("MESH", self.blender_object.type)
+            self.assertEqual(self.mesh, self.blender_object.data)
 
     def test_type_property(self):
         with self.subTest("Setter: Type must be str (raises TypeError)"):
@@ -51,10 +57,16 @@ class TestBlenderObject(TestCase):
 
     def test_dict_property(self):
         bl_obj: BlenderObject = BlenderObject()
-        name: str = "test"
-        bl_obj.name = name
-        bl_obj.type = self.mock_dict[name]["type"]
-        self.assertEqual(self.mock_dict, bl_obj.dict)
+        bl_obj.name = "test"
+        bl_obj.type = self.mock_dict[bl_obj.name]["type"]
+        with self.subTest("When object type == 'EMPTY', data is None"):
+            self.assertEqual(self.mock_dict, bl_obj.dict)
+        with self.subTest("When object type != 'EMPTY', data is str"):
+            bl_obj.type = "MESH"
+            bl_obj.data = self.mesh
+            self.mock_dict[bl_obj.name]["type"] = bl_obj.type
+            self.mock_dict[bl_obj.name]["data"] = bl_obj.data.name
+            self.assertEqual(self.mock_dict, bl_obj.dict)
 
 
 class TestBlenderObjectGenerator(TestCase):

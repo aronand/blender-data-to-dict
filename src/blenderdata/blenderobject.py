@@ -3,6 +3,7 @@ from typing import Any, Generator, Iterable
 from . import utils
 from .blenderdatabaseclass import BlenderDataBaseClass
 from .blenderobjectprotocol import BlenderObjectProtocol
+from .blendermeshprotocol import BlenderMeshProtocol
 
 
 class BlenderObject(BlenderDataBaseClass):
@@ -12,7 +13,7 @@ class BlenderObject(BlenderDataBaseClass):
     def __init__(self):
         super().__init__()
         self.__type: str = ""  # type should never be "", treat as error
-        self.__data: str | int = 0  # if int, treat as None, or error if type != "EMPTY"
+        self.__data: BlenderMeshProtocol | None = None
         self.__modifiers: list = []  # TODO: Modifier class and protocol
         self.__material_slots: list = []  # TODO: MaterialSlot class and protocol
 
@@ -25,8 +26,12 @@ class BlenderObject(BlenderDataBaseClass):
         self.__type = utils.validate_string(type_name)
 
     @property
-    def data(self) -> str | int:
+    def data(self) -> BlenderMeshProtocol | None:
         return self.__data
+
+    @data.setter
+    def data(self, data: BlenderMeshProtocol | None):
+        self.__data = data
 
     @property
     def modifiers(self) -> list:
@@ -38,10 +43,11 @@ class BlenderObject(BlenderDataBaseClass):
 
     @property
     def dict(self) -> dict[str, Any]:
+        data: str | None = (None if self.type == "EMPTY" else self.data.name)
         return {
             self.name: {
                 "type": self.type,
-                "data": self.data,
+                "data": data,
                 "modifiers": self.modifiers,
                 "material_slots": self.material_slots
             }
@@ -50,6 +56,7 @@ class BlenderObject(BlenderDataBaseClass):
     def init_from_object(self, obj: BlenderObjectProtocol):
         self.name = obj.name
         self.type = obj.type
+        self.data = obj.data
 
 
 def blender_object_generator(objects: Iterable) -> Generator[BlenderObject, None, None]:
