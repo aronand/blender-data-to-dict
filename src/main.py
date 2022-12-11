@@ -47,6 +47,10 @@ class Main:
 
 
 if __name__ == "__main__":
+    start_time: float = time.perf_counter()
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s: %(levelname)s - %(message)s")
     logging.debug("Starting script")
     Main().run()
+    elapsed_time: float = time.perf_counter() - start_time
+    logging.debug(f"Took {elapsed_time:0.2f} seconds")
+
