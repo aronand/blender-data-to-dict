@@ -1,5 +1,7 @@
 from typing import Any, Protocol, runtime_checkable
 
+from .blendermeshprotocol import BlenderMeshProtocol
+
 
 @runtime_checkable
 class BlenderObjectProtocol(Protocol):
@@ -11,7 +13,7 @@ class BlenderObjectProtocol(Protocol):
     def type(self) -> str: ...
 
     @property
-    def data(self) -> Any: ...  # TODO: Switch to BlenderMeshProtocol once implemented
+    def data(self) -> BlenderMeshProtocol | None: ...
 
     @property
     def modifiers(self) -> Any: ...  # TODO: What does modifiers actually return? -> bpy_prop_collection
