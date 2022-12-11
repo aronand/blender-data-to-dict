@@ -1,7 +1,7 @@
 from typing import Any
 from unittest import TestCase
 
-from blenderdata import BlenderMesh
+from blenderdata import BlenderMesh, BlenderMeshProtocol
 
 
 class TestBlenderMesh(TestCase):
@@ -14,3 +14,7 @@ class TestBlenderMesh(TestCase):
     def test_dict(self):
         self.mesh.name = "test"
         self.assertEqual(self.mock_dict, self.mesh.dict)
+
+    def test_protocol_implementation(self):
+        with self.subTest("BlenderMesh implements BlenderMeshProtocol"):
+            self.assertTrue(isinstance(self.mesh, BlenderMeshProtocol))
