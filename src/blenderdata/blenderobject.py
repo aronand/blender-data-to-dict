@@ -1,4 +1,4 @@
-from typing import Any, Iterable
+from typing import Any, Generator, Iterable
 
 from . import utils
 from .blenderdatabaseclass import BlenderDataBaseClass
@@ -60,7 +60,7 @@ class BlenderObject(BlenderDataBaseClass):
         self.type = obj.type
 
 
-def blender_object_generator(objects: Iterable) -> BlenderObject:
+def blender_object_generator(objects: Iterable) -> Generator[BlenderObject, None, None]:
     for obj in objects:
         blender_object: BlenderObject = BlenderObject()
         blender_object.init_from_object(obj)
