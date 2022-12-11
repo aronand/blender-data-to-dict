@@ -3,6 +3,7 @@ import json
 import logging
 import os.path
 import sys
+import time
 from typing import Any
 
 
@@ -46,6 +47,6 @@ class Main:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s: %(levelname)s - %(message)s")
     logging.debug("Starting script")
     Main().run()
