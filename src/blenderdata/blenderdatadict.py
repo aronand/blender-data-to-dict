@@ -1,5 +1,6 @@
 from typing import Any, Callable
 
+from . import utils
 from .blendermeshprotocol import BlenderMeshProtocol
 from .blenderobjectprotocol import BlenderObjectProtocol
 
@@ -12,7 +13,7 @@ class BlenderDataDict:
             "Mesh": cls.get_mesh_dict
         }
         data: dict = {}
-        obj_type: str = type(obj).__name__
+        obj_type: str = utils.get_class_name(obj)
         for T, func in __types.items():
             if not obj_type.endswith(T):
                 continue

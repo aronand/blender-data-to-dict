@@ -1,3 +1,6 @@
+from typing import Any
+
+
 def validate_string(string: str) -> str:
     """Validates the type and value of a given string.
 
@@ -10,3 +13,7 @@ def validate_string(string: str) -> str:
     if string == "":
         raise ValueError("Argument can't be an empty string")
     return string
+
+
+def get_class_name(obj: Any) -> str:
+    return type(obj).__name__
