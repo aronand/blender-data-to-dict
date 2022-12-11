@@ -1,8 +1,8 @@
 from typing import Any, Iterable
 
-import utils
-from blenderdata import BlenderData
-from blenderobjectprotocol import BlenderObjectProtocol
+from . import utils
+from .blenderdata import BlenderData
+from .blenderobjectprotocol import BlenderObjectProtocol
 
 
 class BlenderObject(BlenderData):

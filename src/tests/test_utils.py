@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-import utils
+from blenderdata import utils
 
 
 class TestUtils(TestCase):

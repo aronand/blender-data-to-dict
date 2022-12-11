@@ -6,7 +6,7 @@ from typing import Any
 
 
 def main(root_path: str):
-    from blenderobject import blender_object_generator
+    from blenderdata import blender_object_generator
 
     objects_dict: dict[str, Any] = {}
     for obj in blender_object_generator(bpy.data.objects):

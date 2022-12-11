@@ -1,8 +1,7 @@
 from typing import Any
 from unittest import TestCase
 
-from blenderobject import BlenderObject, blender_object_generator
-from blenderobjectprotocol import BlenderObjectProtocol
+from blenderdata import BlenderObject, blender_object_generator, BlenderObjectProtocol
 
 
 class TestBlenderObject(TestCase):
