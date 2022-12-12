@@ -32,7 +32,7 @@ class Main:
 
     def run(self):
         self.__get_root_path()
-        from blenderdata import BlenderDataDict, BlenderDataFactory, BlenderObject
+        from blenderdatadict import BlenderDataDict
 
         for obj in bpy.data.objects:
             logging.debug(f"Adding object '{obj.name}'")
