@@ -36,18 +36,22 @@ class Main:
         self.__get_root_path()
         from blenderdatadict import BlenderDataDict
 
+        logging.info("Getting objects")
         for obj in bpy.data.objects:
             logging.debug(f"Adding object '{obj.name}'")
             self.objects |= BlenderDataDict.get_dict(obj)
 
+        logging.info("Getting meshes")
         for mesh in bpy.data.meshes:
             logging.debug(f"Adding mesh '{mesh.name}'")
             self.meshes |= BlenderDataDict.get_dict(mesh)
 
+        logging.info("Getting materials")
         for material in bpy.data.materials:
             logging.debug(f"Adding material '{material.name}'")
             self.materials |= BlenderDataDict.get_dict(material)
 
+        logging.info("Getting images")
         for image in bpy.data.images:
             logging.debug(f"Adding image '{image.name}'")
             self.images |= BlenderDataDict.get_dict(image)
@@ -59,7 +63,7 @@ class Main:
             "materials": self.materials,
             "images": self.images
         }
-        logging.debug(f"Writing contents to {json_path}")
+        logging.info(f"Writing contents to {json_path}")
         with open(json_path, "w") as output:
             json.dump(json_contents, output, indent=2)
 
@@ -67,8 +71,8 @@ class Main:
 if __name__ == "__main__":
     start_time: float = time.perf_counter()
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s: %(levelname)s - %(message)s")
-    logging.debug("Starting script")
+    logging.info("Starting script")
     Main().run()
     elapsed_time: float = time.perf_counter() - start_time
-    logging.debug(f"Took {elapsed_time:0.2f} seconds")
+    logging.info(f"Took {elapsed_time:0.2f} seconds")
 
