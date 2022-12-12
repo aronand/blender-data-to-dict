@@ -12,6 +12,8 @@ class Main:
         self.__root: str | None = None  # Use the property and the setter instead of directly accessing
         self.objects: dict[str, Any] = {}
         self.meshes: dict[str, Any] = {}
+        self.materials: dict[str, Any] = {}
+        self.images: dict[str, Any] = {}
 
     @property
     def root(self) -> str:
@@ -37,14 +39,25 @@ class Main:
         for obj in bpy.data.objects:
             logging.debug(f"Adding object '{obj.name}'")
             self.objects |= BlenderDataDict.get_dict(obj)
-            if obj.type != "MESH":
-                continue
-            self.meshes |= BlenderDataDict.get_dict(obj.data)
+
+        for mesh in bpy.data.meshes:
+            logging.debug(f"Adding mesh '{mesh.name}'")
+            self.meshes |= BlenderDataDict.get_dict(mesh)
+
+        for material in bpy.data.materials:
+            logging.debug(f"Adding material '{material.name}'")
+            self.materials |= BlenderDataDict.get_dict(material)
+
+        for image in bpy.data.images:
+            logging.debug(f"Adding image '{image.name}'")
+            self.images |= BlenderDataDict.get_dict(image)
 
         json_path: str = os.path.join(self.root, "output.json")
         json_contents: dict[str, dict] = {
             "objects": self.objects,
-            "meshes": self.meshes
+            "meshes": self.meshes,
+            "materials": self.materials,
+            "images": self.images
         }
         logging.debug(f"Writing contents to {json_path}")
         with open(json_path, "w") as output:
