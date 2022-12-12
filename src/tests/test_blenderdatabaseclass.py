@@ -20,8 +20,3 @@ class TestBlenderDataBaseClass(TestCase):
             name: str = "test"
             self.data.name = name
             self.assertEqual(name, self.data.name)
-
-    def test_dict_property(self):
-        with self.subTest("dict property is not implemented (raises NotImplementedError"):
-            with self.assertRaises(NotImplementedError):
-                a = self.data.dict

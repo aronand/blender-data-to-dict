@@ -17,6 +17,3 @@ class BlenderDataBaseClass:
     @name.setter
     def name(self, name: str):
         self.__name = utils.validate_string(name)
-
-    @property
-    def dict(self) -> dict[str, Any]: raise NotImplementedError

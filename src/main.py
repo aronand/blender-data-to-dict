@@ -32,15 +32,14 @@ class Main:
 
     def run(self):
         self.__get_root_path()
-        from blenderdata import BlenderDataFactory, BlenderObject
+        from blenderdata import BlenderDataDict, BlenderDataFactory, BlenderObject
 
         for obj in bpy.data.objects:
             logging.debug(f"Adding object '{obj.name}'")
-            bd_obj: BlenderObject = BlenderDataFactory.get_blender_object(obj)
-            self.objects |= bd_obj.dict
+            self.objects |= BlenderDataDict.get_dict(obj)
             if obj.type != "MESH":
                 continue
-            self.meshes |= bd_obj.data.dict
+            self.meshes |= BlenderDataDict.get_dict(obj.data)
 
         json_path: str = os.path.join(self.root, "output.json")
         json_contents: dict[str, dict] = {

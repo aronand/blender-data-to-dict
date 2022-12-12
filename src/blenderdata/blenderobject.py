@@ -39,15 +39,3 @@ class BlenderObject(BlenderDataBaseClass):
     @property
     def material_slots(self) -> list[str | int]:
         return self.__material_slots
-
-    @property
-    def dict(self) -> dict[str, Any]:
-        data: str | None = (None if self.data is None else self.data.name)
-        return {
-            self.name: {
-                "type": self.type,
-                "data": data,
-                "modifiers": self.modifiers,
-                "material_slots": self.material_slots
-            }
-        }

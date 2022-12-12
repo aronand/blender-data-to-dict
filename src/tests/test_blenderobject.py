@@ -1,4 +1,3 @@
-from typing import Any
 from unittest import TestCase
 
 from blenderdata import BlenderMesh, BlenderObject, BlenderObjectProtocol
@@ -7,20 +6,11 @@ from blenderdata import BlenderMesh, BlenderObject, BlenderObjectProtocol
 class TestBlenderObject(TestCase):
     blender_object: BlenderObject
     mesh: BlenderMesh
-    mock_dict: dict[str, Any]
 
     def setUp(self) -> None:
         self.blender_object = BlenderObject()
         self.mesh = BlenderMesh()
         self.mesh.name = "test"
-        self.mock_dict: dict[str, Any] = {
-            "test": {
-                "type": "EMPTY",
-                "data": None,
-                "modifiers": [],
-                "material_slots": []
-            }
-        }
 
     def test_initialization(self):
         with self.subTest("Initialized object is empty"):
@@ -45,16 +35,3 @@ class TestBlenderObject(TestCase):
     def test_protocol_implementation(self):
         with self.subTest("BlenderObject implements BlenderObjectProtocol"):
             self.assertTrue(isinstance(self.blender_object, BlenderObjectProtocol))
-
-    def test_dict_property(self):
-        bl_obj: BlenderObject = BlenderObject()
-        bl_obj.name = "test"
-        bl_obj.type = self.mock_dict[bl_obj.name]["type"]
-        with self.subTest("When object type == 'EMPTY', data is None"):
-            self.assertEqual(self.mock_dict, bl_obj.dict)
-        with self.subTest("When object type != 'EMPTY', data is str"):
-            bl_obj.type = "MESH"
-            bl_obj.data = self.mesh
-            self.mock_dict[bl_obj.name]["type"] = bl_obj.type
-            self.mock_dict[bl_obj.name]["data"] = bl_obj.data.name
-            self.assertEqual(self.mock_dict, bl_obj.dict)
