@@ -30,8 +30,26 @@ class BlenderData:
         material: bpy.types.Material
         materials: dict[str, Any] = {}
         for material in bpy.data.materials:
-            materials[material.name] = {}
+            materials[material.name] = {
+                "node_tree": {
+                    "nodes": cls.__get_node_tree_nodes(material)
+                }
+            }
         return materials
+
+    @classmethod
+    def __get_node_tree_nodes(cls, material: bpy.types.Material) -> dict[str, Any]:
+        nodes: dict[str, Any] = {}
+        if material.node_tree is None:
+            return nodes
+        for node in material.node_tree.nodes:
+            node_data: dict[str, Any] = {
+                "type": node.type
+            }
+            if type(node) is bpy.types.ShaderNodeTexImage:
+                node_data["image"] = node.image.name
+            nodes[node.name] = node_data
+        return nodes
 
     @classmethod
     def images_dict(cls) -> dict[str, Any]:
