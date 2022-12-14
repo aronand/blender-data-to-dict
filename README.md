@@ -20,3 +20,17 @@ words, using `dict["objects"]["Cube"]` will give access to data equivalent to us
 - meshes
 - materials
 - images
+
+## Minimum Python and Blender version
+
+The script uses union type annotation introduced in Python 3.10, making [Blender 3.1](https://wiki.blender.org/wiki/Reference/Release_Notes/3.1/Python_API)
+the oldest supported version as is.
+
+## How to use
+
+Incorporate the BlenderData class from blenderdata.py into your script, or use the script as is, but change the code so as to call BlenderData during execution.
+
+To generate the dictionary:
+```python
+data: dict[str, Any] = BlenderData.dict()
+```
