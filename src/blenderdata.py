@@ -39,10 +39,13 @@ class BlenderData:
         images: dict[str, Any] = {}
         for image in bpy.data.images:
             images[image.name] = {
-                "type": image.type,
-                "filepath": image.filepath,
+                "channels": image.channels,
+                "depth": image.depth,
                 "file_format": image.file_format,
-                "size": [dimension for dimension in image.size]
+                "filepath": image.filepath,
+                "size": [dimension for dimension in image.size],
+                "source": image.source,
+                "type": image.type,
             }
         return images
 
