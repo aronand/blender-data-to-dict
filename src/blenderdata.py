@@ -38,7 +38,12 @@ class BlenderData:
         image: bpy.types.Image
         images: dict[str, Any] = {}
         for image in bpy.data.images:
-            images[image.name] = {}
+            images[image.name] = {
+                "type": image.type,
+                "filepath": image.filepath,
+                "file_format": image.file_format,
+                "size": [dimension for dimension in image.size]
+            }
         return images
 
     @classmethod
