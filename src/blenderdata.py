@@ -52,10 +52,5 @@ class BlenderData:
         }
 
 
-def main() -> None:
-    data: dict[str, Any] = BlenderData.dict()
-    print(data)
-
-
 if __name__ == "__main__":
-    main()
+    raise RuntimeError("This module should only be imported")
