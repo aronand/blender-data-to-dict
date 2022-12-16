@@ -78,6 +78,7 @@ class BlenderData:
         for scene in bpy.data.scenes:
             scenes[scene.name] = {
                 "objects": [obj.name for obj in scene.objects],
+                "view_layers": [layer.name for layer in scene.view_layers],
             }
         return scenes
 
