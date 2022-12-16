@@ -16,15 +16,17 @@ Its usefulness is to be decided. For now, it's an interesting way to get more fa
 Each listed key will hold a dictionary where a corresponding data type's contents can be found using its name. In other
 words, using `dict["objects"]["Cube"]` will give access to data equivalent to using `bpy.data.objects["Cube"]`.
 
-- objects
-- meshes
-- materials
 - images
+- materials
+- meshes
+- objects
+- scenes
 
 ## Minimum Python and Blender version
 
 The script uses union type annotation introduced in Python 3.10, making
-[Blender 3.1](https://wiki.blender.org/wiki/Reference/Release_Notes/3.1/Python_API) the oldest supported version as is.
+[Blender 3.1](https://wiki.blender.org/wiki/Reference/Release_Notes/3.1/Python_API) the oldest supported version without
+modifications.
 
 ## How to use
 
@@ -55,4 +57,4 @@ for scene, contents in scenes.items():
 ```
 
 > Note that this works for other scene data as well (vertices, edges, faces)
-> 
+
