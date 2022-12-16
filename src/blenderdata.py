@@ -74,7 +74,12 @@ class BlenderData:
 
     @classmethod
     def scenes_dict(cls) -> dict[str, Any]:
-        pass
+        scenes: dict[str, Any] = {}
+        for scene in bpy.data.scenes:
+            scenes[scene.name] = {
+                "objects": [obj.name for obj in scene.objects],
+            }
+        return scenes
 
     @classmethod
     def dict(cls) -> dict[str, Any]:
