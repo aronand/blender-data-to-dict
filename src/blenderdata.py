@@ -22,10 +22,12 @@ class BlenderData:
         mesh: bpy.types.Mesh
         meshes: dict[str, Any] = {}
         for mesh in bpy.data.meshes:
+            mesh.calc_loop_triangles()  # must be called before we access mesh.loop_triangles
             meshes[mesh.name] = {
                 "edges": len(mesh.edges),  # 1 edge = 2 vertices
                 "loops": len(mesh.loops),  # 1 loop = 1 edge, 1 vert
                 "polygons": len(mesh.polygons),  # 1 polygon = n loops
+                "tris": len(mesh.loop_triangles),
                 "vertices": len(mesh.vertices),
             }
         return meshes
