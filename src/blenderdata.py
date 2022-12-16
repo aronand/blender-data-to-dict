@@ -10,10 +10,10 @@ class BlenderData:
         for obj in bpy.data.objects:
             data: str | None = (None if obj.data is None else obj.data.name)
             objects[obj.name] = {
-                "type": obj.type,
                 "data": data,
+                "material_slots": [mat.name for mat in obj.material_slots],
                 "modifiers": [mod.type for mod in obj.modifiers],
-                "material_slots": [mat.name for mat in obj.material_slots]
+                "type": obj.type,
             }
         return objects
 
@@ -22,7 +22,14 @@ class BlenderData:
         mesh: bpy.types.Mesh
         meshes: dict[str, Any] = {}
         for mesh in bpy.data.meshes:
-            meshes[mesh.name] = {}
+            mesh.calc_loop_triangles()  # must be called before we access mesh.loop_triangles
+            meshes[mesh.name] = {
+                "edges": len(mesh.edges),  # 1 edge = 2 vertices
+                "loops": len(mesh.loops),  # 1 loop = 1 edge, 1 vert
+                "polygons": len(mesh.polygons),  # 1 polygon = n loops
+                "tris": len(mesh.loop_triangles),
+                "vertices": len(mesh.vertices),
+            }
         return meshes
 
     @classmethod
@@ -68,13 +75,24 @@ class BlenderData:
         return images
 
     @classmethod
+    def scenes_dict(cls) -> dict[str, Any]:
+        scenes: dict[str, Any] = {}
+        for scene in bpy.data.scenes:
+            scenes[scene.name] = {
+                "objects": [obj.name for obj in scene.objects],
+                "view_layers": [layer.name for layer in scene.view_layers],
+            }
+        return scenes
+
+    @classmethod
     def dict(cls) -> dict[str, Any]:
         """Returns everything in a single dictionary. Must be defined after all the classmethods it calls!"""
         return {
-            "objects": cls.objects_dict(),
-            "meshes": cls.mesh_dict(),
+            "images": cls.images_dict(),
             "materials": cls.materials_dict(),
-            "images": cls.images_dict()
+            "meshes": cls.mesh_dict(),
+            "objects": cls.objects_dict(),
+            "scenes": cls.scenes_dict(),
         }
 
 
