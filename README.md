@@ -23,14 +23,36 @@ words, using `dict["objects"]["Cube"]` will give access to data equivalent to us
 
 ## Minimum Python and Blender version
 
-The script uses union type annotation introduced in Python 3.10, making [Blender 3.1](https://wiki.blender.org/wiki/Reference/Release_Notes/3.1/Python_API)
-the oldest supported version as is.
+The script uses union type annotation introduced in Python 3.10, making
+[Blender 3.1](https://wiki.blender.org/wiki/Reference/Release_Notes/3.1/Python_API) the oldest supported version as is.
 
 ## How to use
 
-Incorporate the BlenderData class from blenderdata.py into your script, or use the script as is, but change the code so as to call BlenderData during execution.
+Incorporate the BlenderData class from blenderdata.py into your script, or use the script as is, but change the code to
+call BlenderData during execution.
 
-To generate the dictionary:
+### Generating the dictionary
+
 ```python
 data: dict[str, Any] = BlenderData.dict()
 ```
+
+### Calculating scene triangles
+
+```python
+scenes: dict[str, Any] = data["scenes"]
+objects: dict[str, Any] = data["objects"]
+meshes: dict[str, Any] = data["meshes"]
+
+for scene, contents in scenes.items():
+    tris: int = 0
+    for obj in contents["objects"]:
+        if objects[obj]["type"] != "MESH":
+            continue
+        mesh: str = objects[obj]["data"]
+        tris += meshes[mesh]["loop_triangles"]
+    print(f"Scene \"{scene}\" tris: {tris}")
+```
+
+> Note that this works for other scene data as well (vertices, edges, faces)
+> 
