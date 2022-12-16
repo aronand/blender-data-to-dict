@@ -10,10 +10,11 @@ class BlenderData:
         for obj in bpy.data.objects:
             data: str | None = (None if obj.data is None else obj.data.name)
             objects[obj.name] = {
-                "type": obj.type,
                 "data": data,
+                "material_slots": [mat.name for mat in obj.material_slots],
                 "modifiers": [mod.type for mod in obj.modifiers],
-                "material_slots": [mat.name for mat in obj.material_slots]
+                "statistics": cls.__get_object_stats(obj),
+                "type": obj.type,
             }
         return objects
 
@@ -79,10 +80,11 @@ class BlenderData:
     def dict(cls) -> dict[str, Any]:
         """Returns everything in a single dictionary. Must be defined after all the classmethods it calls!"""
         return {
-            "objects": cls.objects_dict(),
-            "meshes": cls.mesh_dict(),
+            "images": cls.images_dict(),
             "materials": cls.materials_dict(),
-            "images": cls.images_dict()
+            "meshes": cls.mesh_dict(),
+            "objects": cls.objects_dict(),
+            "scene_stats": cls.scene_stats_dict(),
         }
 
 
