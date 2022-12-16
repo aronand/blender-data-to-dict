@@ -13,21 +13,21 @@ class BlenderData:
                 "data": data,
                 "material_slots": [mat.name for mat in obj.material_slots],
                 "modifiers": [mod.type for mod in obj.modifiers],
-                "statistics": cls.__get_object_stats(obj),
                 "type": obj.type,
             }
         return objects
-
-    @classmethod
-    def __get_object_stats(cls, obj: bpy.types.Object) -> dict[str, int]:
-        pass
 
     @classmethod
     def mesh_dict(cls) -> dict[str, Any]:
         mesh: bpy.types.Mesh
         meshes: dict[str, Any] = {}
         for mesh in bpy.data.meshes:
-            meshes[mesh.name] = {}
+            meshes[mesh.name] = {
+                "edges": len(mesh.edges),  # 1 edge = 2 vertices
+                "loops": len(mesh.loops),  # 1 loop = 1 edge, 1 vert
+                "polygons": len(mesh.polygons),  # 1 polygon = n loops
+                "vertices": len(mesh.vertices),
+            }
         return meshes
 
     @classmethod
