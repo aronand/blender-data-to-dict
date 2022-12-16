@@ -1,10 +1,18 @@
-import bpy
+"""Module holding the BlenderData class, used to turn bpy.data into a dictionary."""
 from typing import Any
+
+import bpy
 
 
 class BlenderData:
+    """A static class used to get a dictionary of Blender data.
+
+    Can be used to return specific dictionaries (e.g. objects, materials, etc.) or
+    everything as single dictionary
+    """
     @classmethod
     def objects_dict(cls) -> dict[str, Any]:
+        """Returns a dictionary of bpy.data.objects."""
         obj: bpy.types.Object
         objects: dict[str, Any] = {}
         for obj in bpy.data.objects:
@@ -19,6 +27,7 @@ class BlenderData:
 
     @classmethod
     def mesh_dict(cls) -> dict[str, Any]:
+        """Returns a dictionary of bpy.data.meshes."""
         mesh: bpy.types.Mesh
         meshes: dict[str, Any] = {}
         for mesh in bpy.data.meshes:
@@ -34,6 +43,7 @@ class BlenderData:
 
     @classmethod
     def materials_dict(cls) -> dict[str, Any]:
+        """Returns a dictionary of bpy.data.materials."""
         material: bpy.types.Material
         materials: dict[str, Any] = {}
         for material in bpy.data.materials:
@@ -46,6 +56,10 @@ class BlenderData:
 
     @classmethod
     def __get_node_tree_nodes(cls, material: bpy.types.Material) -> dict[str, Any]:
+        """Returns a dictionary of nodes in a material's node_tree.
+
+        :param material: A bpy.types.Material object
+        """
         nodes: dict[str, Any] = {}
         if material.node_tree is None:
             return nodes
@@ -53,13 +67,14 @@ class BlenderData:
             node_data: dict[str, Any] = {
                 "type": node.type
             }
-            if type(node) is bpy.types.ShaderNodeTexImage:
+            if isinstance(node, bpy.types.ShaderNodeTexImage):
                 node_data["image"] = node.image.name
             nodes[node.name] = node_data
         return nodes
 
     @classmethod
     def images_dict(cls) -> dict[str, Any]:
+        """Returns a dictionary of bpy.data.images."""
         image: bpy.types.Image
         images: dict[str, Any] = {}
         for image in bpy.data.images:
@@ -68,7 +83,7 @@ class BlenderData:
                 "depth": image.depth,
                 "file_format": image.file_format,
                 "filepath": image.filepath,
-                "size": [dimension for dimension in image.size],
+                "size": list(image.size),
                 "source": image.source,
                 "type": image.type,
             }
@@ -76,6 +91,7 @@ class BlenderData:
 
     @classmethod
     def scenes_dict(cls) -> dict[str, Any]:
+        """Returns a dictionary of bpy.data.scenes."""
         scenes: dict[str, Any] = {}
         for scene in bpy.data.scenes:
             scenes[scene.name] = {
@@ -86,7 +102,8 @@ class BlenderData:
 
     @classmethod
     def dict(cls) -> dict[str, Any]:
-        """Returns everything in a single dictionary. Must be defined after all the classmethods it calls!"""
+        """Returns everything in a single dictionary."""
+        # Note: Must be defined after all the methods it calls
         return {
             "images": cls.images_dict(),
             "materials": cls.materials_dict(),
