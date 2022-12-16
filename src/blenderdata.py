@@ -18,6 +18,10 @@ class BlenderData:
         return objects
 
     @classmethod
+    def __get_object_stats(cls, obj: bpy.types.Object) -> dict[str, int]:
+        pass
+
+    @classmethod
     def mesh_dict(cls) -> dict[str, Any]:
         mesh: bpy.types.Mesh
         meshes: dict[str, Any] = {}
@@ -66,6 +70,10 @@ class BlenderData:
                 "type": image.type,
             }
         return images
+
+    @classmethod
+    def scene_stats_dict(cls) -> dict[str, int]:
+        pass
 
     @classmethod
     def dict(cls) -> dict[str, Any]:
