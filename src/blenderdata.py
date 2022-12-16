@@ -83,7 +83,7 @@ class BlenderData:
                 "depth": image.depth,
                 "file_format": image.file_format,
                 "filepath": image.filepath,
-                "size": list(image.size),
+                "size": tuple(image.size),
                 "source": image.source,
                 "type": image.type,
             }
