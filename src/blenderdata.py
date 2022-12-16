@@ -68,7 +68,7 @@ class BlenderData:
                 "type": node.type
             }
             if isinstance(node, bpy.types.ShaderNodeTexImage):
-                node_data["image"] = node.image.name
+                node_data["image"] = None if node.image is None else node.image.name
             nodes[node.name] = node_data
         return nodes
 
