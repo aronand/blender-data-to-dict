@@ -26,7 +26,7 @@ class BlenderData:
         return objects
 
     @classmethod
-    def mesh_dict(cls) -> dict[str, Any]:
+    def meshes_dict(cls) -> dict[str, Any]:
         """Returns a dictionary of bpy.data.meshes."""
         mesh: bpy.types.Mesh
         meshes: dict[str, Any] = {}
@@ -107,7 +107,7 @@ class BlenderData:
         return {
             "images": cls.images_dict(),
             "materials": cls.materials_dict(),
-            "meshes": cls.mesh_dict(),
+            "meshes": cls.meshes_dict(),
             "objects": cls.objects_dict(),
             "scenes": cls.scenes_dict(),
         }
