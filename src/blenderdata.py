@@ -36,7 +36,7 @@ class BlenderData:
                 "edges": len(mesh.edges),  # 1 edge = 2 vertices
                 "loops": len(mesh.loops),  # 1 loop = 1 edge, 1 vert
                 "polygons": len(mesh.polygons),  # 1 polygon = n loops
-                "tris": len(mesh.loop_triangles),
+                "loop_triangles": len(mesh.loop_triangles),
                 "vertices": len(mesh.vertices),
             }
         return meshes
