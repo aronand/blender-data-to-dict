@@ -11,16 +11,57 @@ single step.
 
 Its usefulness is to be decided. For now, it's an interesting way to get more familiar with Blender's internals.
 
-## Planned output contents
+## Output contents
 
 Each listed key will hold a dictionary where a corresponding data type's contents can be found using its name. In other
 words, using `dict["objects"]["Cube"]` will give access to data equivalent to using `bpy.data.objects["Cube"]`.
 
-- images
-- materials
-- meshes
-- objects
-- scenes
+<details>
+<summary>images</summary>
+
+- channels: <sup><sub>int</sup></sub>
+- depth: <sup><sub>int</sup></sub>
+- file_format: <sup><sub>str</sup></sub>
+- filepath: <sup><sub>str</sup></sub>
+- size: <sup><sub>tuple[int, int]</sup></sub>
+- source: <sup><sub>str</sup></sub>
+- type: <sup><sub>str</sup></sub>
+</details>
+
+<details>
+<summary>materials</summary>
+
+- node_tree: <sup><sub>dict[str, dict]</sup></sub>
+  - nodes: <sup><sub>dict[str, Any]</sup></sub>
+    - type: <sup><sub>str</sup></sub>
+    - image: <sup><sub>str | None</sup></sub> (*name of the image if not None and node is instance of ShaderNodeTexImage*)
+</details>
+
+<details>
+<summary>meshes</summary>
+
+- edges: <sup><sub>int</sup></sub>
+- loops: <sup><sub>int</sup></sub>
+- polygons: <sup><sub>int</sup></sub>
+- loop_triangles: <sup><sub>int</sup></sub>
+- vertices: <sup><sub>int</sup></sub>
+</details>
+
+<details>
+<summary>objects</summary>
+
+- data: <sup><sub>str | None</sup></sub> (*name of data object (e.g. mesh) if not None*)
+- material_slots: <sup><sub>list[str]</sup></sub> (*names of materials used by objects, if any*)
+- modifiers: <sup><sub>list[str]</sup></sub> (*types of (unapplied) modifiers the object has, if any*)
+- type: <sup><sub>str</sup></sub> (*the type of the object, e.g. "MESH"*)
+</details>
+
+<details>
+<summary>scenes</summary>
+
+- objects: <sup><sub>list[str]</sup></sub> (*names of objects in scene, if any*)
+- view_layers: <sup><sub>list[str]</sup></sub> (*names of scene view layers*)
+</details>
 
 ## Minimum Python and Blender version
 
