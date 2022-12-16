@@ -73,7 +73,7 @@ class BlenderData:
         return images
 
     @classmethod
-    def scene_stats_dict(cls) -> dict[str, int]:
+    def scenes_dict(cls) -> dict[str, Any]:
         pass
 
     @classmethod
@@ -84,7 +84,7 @@ class BlenderData:
             "materials": cls.materials_dict(),
             "meshes": cls.mesh_dict(),
             "objects": cls.objects_dict(),
-            "scene_stats": cls.scene_stats_dict(),
+            "scenes": cls.scenes_dict(),
         }
 
 
